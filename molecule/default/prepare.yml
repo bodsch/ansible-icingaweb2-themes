@@ -53,6 +53,6 @@
     # this role has some problems with archlinux
     # - role: nginx
     - role: php-fpm
-    - role: ansible-icingaweb2
+    - role: icingaweb
 
 ...
