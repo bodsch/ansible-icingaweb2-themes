@@ -1,0 +1,29 @@
+---
+
+- name: download external themes to ansible controller
+  become: false
+  delegate_to: localhost
+  git:
+    depth: 1 # copy the least bit of history possible to get that repo.
+    repo: "{{ item.value.src }}"
+    version: "{{ item.value.version | default('') }}"
+    dest: "{{ icingaweb_themes_local_tmp_directory }}/{{ item.key }}"
+    update: true
+  loop:
+    "{{ icingaweb_themes | dict2items }}"
+  loop_control:
+    label: "theme: {{ item.key }} - version: {{ item.value.version | default('', true) }}"
+
+- name: download external images for theme to ansible controller
+  include_tasks: download_images.yml
+  loop:
+    "{{ icingaweb_themes | dict2items }}"
+  loop_control:
+    index_var: index
+    loop_var: theme
+    label: "theme: {{ theme.key }}"
+  when:
+    - theme.value.images is defined
+    - theme.value.images | count > 0
+
+...
