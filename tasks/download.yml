@@ -12,9 +12,9 @@
   loop:
     "{{ icingaweb_themes | dict2items }}"
   loop_control:
-    label: "theme: {{ item.key }} - version: {{ item.value.version | default('', true) }} - update: {{ item.value['update'] | default('false') | bool }} "
+    label: "theme: {{ item.key }} - version: {{ item.value.version | default('', true) }} - download: {{ item.value['download'] | default('true') | bool }} "
   when:
-    - item.value['update'] | default('false') | bool
+    - item.value['download'] | default('true') | bool
 
 - name: ensure image directory are present
   become: false
@@ -42,6 +42,6 @@
   when:
     - theme.value.images is defined
     - theme.value.images | count > 0
-    - theme.value['update'] | default('false') | bool
+    - theme.value['download'] | default('true') | bool
 
 ...

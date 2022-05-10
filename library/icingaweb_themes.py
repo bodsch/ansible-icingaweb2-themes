@@ -81,6 +81,9 @@ class IcingaWeb2Themes(object):
                         ".checksum"
                     )
 
+                    self.module.log(msg="- checksum_file : '{}'".format(checksum_file))
+
+
                     if os.path.exists(checksum_file):
                         with open(checksum_file) as f:
                             checksum = f.readlines()[0]
@@ -96,14 +99,23 @@ class IcingaWeb2Themes(object):
                         checksum_compare = (checksum is not None and theme_checksum is not None and theme_checksum == checksum)
 
                         if version_compare_git:
-                            self.themes[theme]['update'] = True
+                            self.themes[theme]['download'] = True
                             changed = True
                         else:
                             if not version_compare and not checksum_compare:
-                                self.themes[theme]['update'] = True
+                                self.themes[theme]['download'] = True
                                 changed = True
                             else:
-                                self.themes[theme]['update'] = False
+                                self.themes[theme]['download'] = False
+                    else:
+                        self.themes[theme]['download'] = True
+                        changed = True
+            else:
+                _themes = self.themes.copy()
+
+                for theme in _themes:
+                    self.themes[theme]['download'] = True
+                    changed = True
 
             res['changed'] = changed
             res['themes'] = self.themes

@@ -18,7 +18,7 @@
   loop_control:
     label: "theme: {{ item.key }}"
   when:
-    - item.value['update'] | default('false') | bool
+    - item.value['download'] | default('true') | bool
   async: 1000
   poll: 10
 
@@ -52,7 +52,7 @@
   loop_control:
     label: "theme: {{ item.key }}"
   when:
-    - item.value['update'] | default('false') | bool
+    - item.value['download'] | default('true') | bool
 
 - name: extract theme archives
   unarchive:
@@ -65,7 +65,7 @@
   loop_control:
     label: "theme: {{ item.key }}"
   when:
-    - item.value['update'] | default('false') | bool
+    - item.value['download'] | default('true') | bool
 
 - name: copy themes in place
   become: true
@@ -81,7 +81,7 @@
   loop_control:
     label: "theme: {{ item.key }}"
   when:
-    - item.value['update'] | default('false') | bool
+    - item.value['download'] | default('true') | bool
 
 - name: create theme checksum
   copy:

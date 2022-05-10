@@ -3,9 +3,9 @@
 # {{ ansible_managed }}
 {% for t, v in icingaweb_themes.items() %}
   {% set _ = v.pop("src") %}
+  {% set _ = v.pop("download") %}
   {% if v.images is defined %}
     {% set _ = v.pop("images") %}
-    {% set _ = v.pop("update") %}
   {% endif %}
 {% endfor %}
 cat <<EOF
