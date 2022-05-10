@@ -17,6 +17,8 @@
     "{{ icingaweb_themes | dict2items }}"
   loop_control:
     label: "theme: {{ item.key }}"
+  when:
+    - item.value['update'] | default('false') | bool
   async: 1000
   poll: 10
 
@@ -49,6 +51,8 @@
     "{{ icingaweb_themes | dict2items }}"
   loop_control:
     label: "theme: {{ item.key }}"
+  when:
+    - item.value['update'] | default('false') | bool
 
 - name: extract theme archives
   unarchive:
@@ -60,6 +64,8 @@
     "{{ icingaweb_themes | dict2items }}"
   loop_control:
     label: "theme: {{ item.key }}"
+  when:
+    - item.value['update'] | default('false') | bool
 
 - name: copy themes in place
   become: true
@@ -73,7 +79,9 @@
   loop:
     "{{ icingaweb_themes | dict2items }}"
   loop_control:
-    label: "  theme: {{ item.key }}"
+    label: "theme: {{ item.key }}"
+  when:
+    - item.value['update'] | default('false') | bool
 
 - name: create theme checksum
   copy:
@@ -85,7 +93,7 @@
   loop:
     "{{ icingaweb_themes | dict2items }}"
   loop_control:
-    label: "  theme: {{ item.key }}"
+    label: "theme: {{ item.key }}"
 
 - name: enable / disable themes
   become: true
@@ -96,7 +104,7 @@
   loop:
     "{{ icingaweb_themes | dict2items }}"
   loop_control:
-    label: "  theme: {{ item.key }} - enabled: {{ item.value.enabled | default('False', true) }}"
+    label: "theme: {{ item.key }} - enabled: {{ item.value.enabled | default('False', true) }}"
 
 - name: create custom fact file
   template:

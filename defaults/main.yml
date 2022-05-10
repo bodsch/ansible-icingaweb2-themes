@@ -2,7 +2,7 @@
 
 icingaweb_themes_install_dir: /usr/share/icingaweb2
 
-icingaweb_themes: []
+icingaweb_themes: {}
 #   - unicorn:
 #     name: unicorn
 #     src: https://github.com/Mikesch-mp/icingaweb2-theme-unicorn.git

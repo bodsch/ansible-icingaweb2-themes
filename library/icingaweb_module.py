@@ -21,7 +21,7 @@ ANSIBLE_METADATA = {
 
 DOCUMENTATION = """
 ---
-module: icingawweb_module.py
+module: icingaweb_module.py
 author:
     - 'Bodo Schulz'
 short_description: enable / disable icingaweb modules.

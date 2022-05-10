@@ -5,6 +5,7 @@
   {% set _ = v.pop("src") %}
   {% if v.images is defined %}
     {% set _ = v.pop("images") %}
+    {% set _ = v.pop("update") %}
   {% endif %}
 {% endfor %}
 cat <<EOF

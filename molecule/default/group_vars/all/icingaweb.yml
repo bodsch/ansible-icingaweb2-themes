@@ -41,8 +41,8 @@ icingaweb_commandtransport:
     username: icingaweb
     password: S0mh1TuFJI
 
-# icingaweb_themes: []
-#
+icingaweb_themes: []
+
 # icingaweb_themes_default: Icinga
 
 # icingaweb_external_modules: []

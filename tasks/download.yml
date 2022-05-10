@@ -12,7 +12,24 @@
   loop:
     "{{ icingaweb_themes | dict2items }}"
   loop_control:
-    label: "theme: {{ item.key }} - version: {{ item.value.version | default('', true) }}"
+    label: "theme: {{ item.key }} - version: {{ item.value.version | default('', true) }} - update: {{ item.value['update'] | default('false') | bool }} "
+  when:
+    - item.value['update'] | default('false') | bool
+
+- name: ensure image directory are present
+  become: false
+  delegate_to: localhost
+  file:
+    state: directory
+    mode: 0750
+    path: "{{ icingaweb_themes_local_tmp_directory }}/{{ item.key }}/public/img"
+  loop:
+    "{{ icingaweb_themes | dict2items }}"
+  loop_control:
+    label: "theme: {{ item.key }}"
+  when:
+    - item.value.images is defined
+    - item.value.images | count > 0
 
 - name: download external images for theme to ansible controller
   include_tasks: download_images.yml
@@ -25,5 +42,6 @@
   when:
     - theme.value.images is defined
     - theme.value.images | count > 0
+    - theme.value['update'] | default('false') | bool
 
 ...
