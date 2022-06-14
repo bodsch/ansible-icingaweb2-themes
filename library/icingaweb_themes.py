@@ -120,7 +120,7 @@ class IcingaWeb2Themes(object):
             res['changed'] = changed
             res['themes'] = self.themes
         else:
-            msg = "{} is no directory".format(self.module_path)
+            msg = "{} is no directory".format(self.install_directory)
 
             res['ansible_module_results'] = msg
             res['failed'] = True
