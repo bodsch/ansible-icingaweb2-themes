@@ -2,6 +2,12 @@
 
 # icingaweb_version: 2.9.0
 
+icingaweb_web_modules:
+  - name: icinga-php-library
+    version: 0.10.0
+  - name: icinga-php-thirdparty
+    version: 0.11.0
+
 icingaweb_log_level: WARN
 
 icingaweb_resources:
@@ -40,17 +46,6 @@ icingaweb_commandtransport:
     port: 5665
     username: icingaweb
     password: S0mh1TuFJI
-
-icingaweb_themes: []
-
-# icingaweb_themes_default: Icinga
-
-# icingaweb_external_modules: []
-#   - audit:
-#     enabled: true
-#     name: audit
-#     src: https://github.com/Icinga/icingaweb2-module-audit.git
-#     version: v1.0.1
 
 icingaweb_db_groups:
   - groupname: "admin"
