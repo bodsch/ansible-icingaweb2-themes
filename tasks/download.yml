@@ -3,7 +3,7 @@
 - name: download external themes to ansible controller
   become: false
   delegate_to: localhost
-  git:
+  ansible.builtin.git:
     depth: 1 # copy the least bit of history possible to get that repo.
     repo: "{{ item.value.src }}"
     version: "{{ item.value.version | default('') }}"
@@ -19,7 +19,7 @@
 - name: ensure image directory are present
   become: false
   delegate_to: localhost
-  file:
+  ansible.builtin.file:
     state: directory
     mode: 0750
     path: "{{ icingaweb_themes_local_tmp_directory }}/{{ item.key }}/public/img"
@@ -32,7 +32,7 @@
     - item.value.images | count > 0
 
 - name: download external images for theme to ansible controller
-  include_tasks: download_images.yml
+  ansible.builtin.include_tasks: download_images.yml
   loop:
     "{{ icingaweb_themes | dict2items }}"
   loop_control:

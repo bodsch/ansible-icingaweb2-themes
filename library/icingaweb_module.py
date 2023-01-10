@@ -60,29 +60,29 @@ class IcingaWeb2Modules(object):
 
         # module.log(msg="Module: {} - {}".format(self.module, self.state))
 
-        if(os.path.isdir(self.module_path)):
+        if (os.path.isdir(self.module_path)):
             """
 
             """
             source = os.path.join(self.module_path, self.module)
             destination = os.path.join('/etc/icingaweb2/enabledModules', self.module)
 
-            if(os.path.isdir(source)):
+            if (os.path.isdir(source)):
 
                 module.log(msg="module {} exists".format(self.module))
 
-                if(self.state == 'present'):
+                if (self.state == 'present'):
                     """
                       create link from '/usr/share/icingaweb2/modules/$MODULE' to '/etc/icingaweb2/enabledModules/$MODULE'
                     """
-                    if(os.path.islink(destination) and os.readlink(destination) == source):
+                    if (os.path.islink(destination) and os.readlink(destination) == source):
                         # module.log(msg="link exists and is valid")
                         pass
                     else:
-                        if(not os.path.islink(destination)):
+                        if (not os.path.islink(destination)):
                             self.create_link(source, destination)
                         else:
-                            if(os.readlink(destination) != source):
+                            if (os.readlink(destination) != source):
                                 module.log(msg="path '{}' is a broken symlink".format(destination))
                                 self.create_link(source, destination, True)
                             else:
@@ -91,7 +91,7 @@ class IcingaWeb2Modules(object):
                         res['changed'] = True
 
                 else:
-                    if(os.path.islink(destination)):
+                    if (os.path.islink(destination)):
                         os.remove(destination)
                         res['changed'] = True
         else:
@@ -106,7 +106,7 @@ class IcingaWeb2Modules(object):
     def create_link(self, source, destination, force=False):
         module.log(msg="create_link({}, {}, {})".format(source, destination, force))
 
-        if(force):
+        if (force):
             os.remove(destination)
             os.symlink(source, destination)
         else:

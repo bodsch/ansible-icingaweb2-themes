@@ -83,7 +83,6 @@ class IcingaWeb2Themes(object):
 
                     self.module.log(msg="- checksum_file : '{}'".format(checksum_file))
 
-
                     if os.path.exists(checksum_file):
                         with open(checksum_file) as f:
                             checksum = f.readlines()[0]

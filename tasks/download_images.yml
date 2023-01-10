@@ -3,7 +3,7 @@
 - name: download external images for themes to ansible controller
   become: false
   delegate_to: localhost
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "{{ icingaweb_themes_local_tmp_directory }}/{{ theme.key }}/public/img/{{ item.name }}"
     mode: 0660
