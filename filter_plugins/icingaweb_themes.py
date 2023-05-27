@@ -1,14 +1,10 @@
-# python 3 headers, required if submitting to Ansible
+
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 from ansible.utils.display import Display
 
-# import json
 import os
-
-# https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html
-# https://blog.oddbit.com/post/2019-04-25-writing-ansible-filter-plugins/
 
 display = Display()
 
@@ -20,25 +16,22 @@ class FilterModule(object):
 
     def filters(self):
         return {
-            'type': self.var_type,
             'dict_from_list': self.dict_from_list,
             'append_checksum': self.append_checksum,
+            'installed_themes': self.installed_themes,
         }
-
-    def var_type(self, var):
-        """
-          Get the type of a variable
-        """
-        return type(var).__name__
 
     def dict_from_list(self, data, search):
         """
         """
-        display.v("dict_from_list({}, {})".format(data, search))
+        display.v(f"dict_from_list({data}, {search})")
 
-        result = next((item for item in data if item.get('name') == search), {})
+        if(isinstance(data, dict)):
+            result = data.get(search, {})
+        else:
+            result = next((item for item in data if item.get('name') == search), {})
 
-        display.v("result : {}".format(result))
+        display.v(f"result : {result}")
 
         return result
 
@@ -50,13 +43,32 @@ class FilterModule(object):
             checksum = c.get("stat", {}).get("checksum", None)
 
             for d, _ in data.items():
-                file_name = "{}.zip".format(d)
+                file_name = f"{d}.zip"
                 if path.endswith(file_name) and len(file_name) == len(os.path.basename(path)):
                     data[d]['checksum'] = checksum
                     break
 
         result = data
 
-        display.v("result : {}".format(result))
+        display.v(f"result : {result}")
 
         return result
+
+    def installed_themes(self, data):
+        """
+        """
+        _data = data.copy()
+        if isinstance(data, dict):
+            for t, v in _data.items():
+                # display.v(f"  - {t}")
+                # display.v(f"    {v}")
+                if v.get("download", None):
+                    _ = v.pop("download")
+                if v.get("src", None):
+                    _ = v.pop("src")
+                if v.get("images", None):
+                    _ = v.pop("images")
+
+        # display.v(f"result : {_data}")
+
+        return _data

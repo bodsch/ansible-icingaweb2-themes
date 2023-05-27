@@ -107,10 +107,9 @@
     label: "theme: {{ item.key }} - enabled: {{ item.value.enabled | default('False', true) }}"
 
 - name: create custom fact file
-  ansible.builtin.template:
-    src: facts.d/icingaweb2_themes.fact.j2
-    dest: /etc/ansible/facts.d/icingaweb2_themes.fact
-    owner: root
-    group: root
-    mode: 0755
+  bodsch.core.facts:
+    name: icingaweb2_themes
+    facts:
+      modules: "{{ icingaweb_themes | installed_themes }}"
+
 ...

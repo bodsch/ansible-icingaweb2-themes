@@ -23,13 +23,13 @@ platforms:
     groups:
       - database
     docker_networks:
-      - name: icinga
+      - name: icingaweb_themes
         ipam_config:
-          - subnet: "10.11.0.0/16"
-            gateway: "10.11.0.254"
+          - subnet: "10.11.1.0/24"
+            gateway: "10.11.1.254"
     networks:
-      - name: icinga
-        ipv4_address: "10.11.0.1"
+      - name: icingaweb_themes
+        ipv4_address: "10.11.1.1"
 
   # - name: icinga2
   #   image: "bodsch/ansible-${DISTRIBUTION:-debian:10}"
@@ -43,7 +43,7 @@ platforms:
   #     - icinga
   #   networks:
   #     - name: icinga
-  #       ipv4_address: "10.11.0.2"
+  #       ipv4_address: "10.11.1.2"
 
   - name: instance
     image: "bodsch/ansible-${DISTRIBUTION:-debian:11}"
@@ -58,23 +58,26 @@ platforms:
     published_ports:
       - 80:80
     networks:
-      - name: icinga
-        ipv4_address: "10.11.0.3"
+      - name: icingaweb_themes
+        ipv4_address: "10.11.1.3"
 
 provisioner:
   name: ansible
   ansible_args:
     - --diff
-    # - -v
+    - -v
   config_options:
     defaults:
-      deprecation_warnings: True
+      deprecation_warnings: true
       stdout_callback: yaml
       callbacks_enabled: profile_tasks
+      gathering: smart
+      fact_caching: jsonfile
+      fact_caching_timeout: 8640
+      fact_caching_connection: ansible_facts
 
 scenario:
   test_sequence:
-    # - lint
     - destroy
     - dependency
     - syntax

@@ -49,14 +49,6 @@
       when:
         - getent_group is defined
 
-- name: make sure ansible local facts directory exists
-  ansible.builtin.file:
-    dest: /etc/ansible/facts.d
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-
 - name: get local fact for themes
   ansible.builtin.set_fact:
     local_icingaweb2_themes: "{{ ansible_local.icingaweb2_themes.themes }}"
@@ -74,7 +66,7 @@
   when:
     - icingaweb_themes is defined
     - icingaweb_themes | count > 0
-    - icingaweb_themes | type == "dict"
+    - icingaweb_themes | bodsch.core.type == "dict"
   register: changed_icingaweb_themes
 
 - name: re-define icingaweb_themes

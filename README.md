@@ -14,11 +14,34 @@ Install Themes for icingaweb2.
 [releases]: https://github.com/bodsch/ansible-icingaweb2-themes/releases
 [quality]: https://galaxy.ansible.com/bodsch/icingaweb2_themes
 
+## Requirements & Dependencies
+
+Ansible Collections
+
+- [bodsch.core](https://github.com/bodsch/ansible-collection-core)
+
+```bash
+ansible-galaxy collection install bodsch.core
+```
+or
+```bash
+ansible-galaxy collection install --requirements-file collections.yml
+```
+
 
 ## usage
 
 ```yaml
 icingaweb_themes_install_dir: /usr/share/icingaweb2
+
+icingaweb_themes: {}
+
+icingaweb_themes_default: Icinga
+```
+
+### example
+
+```yaml
 
 icingaweb_themes:
   #
@@ -42,8 +65,9 @@ icingaweb_themes:
         url: https://www.pngkit.com/png/full/75-757133_logo-star-wars-star-wars-logo-black-and.png
       - name: wallpaper.jpg
         url: https://wallpapercave.com/wp/wp7419777.jpg
-```
 
+icingaweb_themes_default: nordlicht
+```
 
 ---
 
@@ -55,4 +79,4 @@ icingaweb_themes:
 
 [Apache](LICENSE)
 
-`FREE SOFTWARE, HELL YEAH!`
+**FREE SOFTWARE, HELL YEAH!**
